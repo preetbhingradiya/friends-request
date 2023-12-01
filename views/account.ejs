@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="parent-box">
+      <h1>Friend-Requset</h1>
+    </div>
+  </body>
+  <script>
+    fetch("http://localhost:8090/my/account")
+      .then((res) => res.json())
+      .then((data) => user(data));
+
+    const user = (data) => {
+    let id = document.createElement("p");
+      id.innerHTML =` UserId :- ${data._id}`
+      let name = document.createElement("h3");
+      name.innerHTML =` UserName :- ${data.username}`;
+
+      let accepted=document.createElement("button")
+      accepted.innerHTML="Accepted"
+
+      accepted.addEventListener("click",(e)=>{
+        window.location.href=`http://localhost:8090/accepted/${data._id}`
+      })
+
+      let reject=document.createElement("button")
+      reject.innerHTML="Rejected"
+      reject.addEventListener("click",(e)=>{
+        window.location.href=`http://localhost:8090/rejected/${data._id}`
+      })
+
+      let div = document.createElement("div");
+      div.append(id,name,accepted,reject);
+
+      document.getElementById("parent-box").append(div);
+    };
+  </script>
+</html>

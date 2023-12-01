@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="parent-box"></div>
+</body>
+<script>
+    fetch('http://localhost:8090/all/user')
+    .then((res)=>res.json())
+    .then((data)=>show(data))
+
+    const show=(data)=>{
+        data.map((ele)=>{
+            let name=document.createElement("h3")
+            name.innerHTML=ele.username
+
+            let btn=document.createElement("button")
+            btn.innerHTML="Friend-Requset"
+
+            btn.addEventListener("click",(e)=>{
+                window.location.href=`http://localhost:8090/friend/${ele._id}`
+            })
+
+            let div=document.createElement('div')
+            div.append(name,btn)
+
+            document.getElementById("parent-box").append(div)
+        })
+    }
+</script>
+</html>
