@@ -1,5 +1,7 @@
 const express=require("express")
 const User = require("../models/user-schema")
+const validate = require("../middleware/validate-middleware")
+const signUpSchma = require("../models/validaters")
 
 const user=express()
 
@@ -7,7 +9,7 @@ user.get('/register',(req,res)=>{
     res.render("register")
 })
 
-user.post('/register',async(req,res)=>{
+user.post('/register',validate(signUpSchma),async(req,res)=>{
     let {username,email,password}=req.body
     let user=await User.create({username,email,password})
     res.status(201).json({success:true,user})
